@@ -32,6 +32,6 @@ class SubscribePostValid(TestCase):
                     'raficfarah07@gmail.com',
                     '21-99999-9999']
 
-        for content in contents:
-            with self.subTest():
+        with self.subTest():
+            for content in contents:
                 self.assertIn(content, self.email.body)
