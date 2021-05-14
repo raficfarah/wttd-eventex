@@ -1,3 +1,4 @@
+import hashlib
 from django.conf import settings
 from django.contrib import messages
 from django.template.loader import render_to_string
@@ -23,16 +24,17 @@ def create(request):
                       {'form': form})
 
     subscription = Subscription.objects.create(**form.cleaned_data)
+    subscription.hash_url = hashlib.md5(subscription.email.encode()).hexdigest()
+    subscription.save()
 
     # Send subscripton email
-
     _send_mail('Confirmação de inscrição',
                settings.DEFAULT_FROM_EMAIL,
                subscription.email,
                'subscriptions/subscription_email.txt',
                {'subscription': subscription})
 
-    return HttpResponseRedirect('/inscricao/{}/'.format(subscription.pk))
+    return HttpResponseRedirect(f'/inscricao/{subscription.hash_url}/')
 
 
 def new(request):
@@ -40,9 +42,9 @@ def new(request):
                   {'form': SubscriptionForm()})
 
 
-def detail(request, pk):
+def detail(request, hash_url):
     try:
-        subscription = Subscription.objects.get(pk=pk)
+        subscription = Subscription.objects.get()
     except Subscription.DoesNotExist:
         raise Http404
 

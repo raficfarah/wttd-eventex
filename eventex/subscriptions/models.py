@@ -8,6 +8,7 @@ class Subscription(models.Model):
     email = models.EmailField('e-mail')
     phone = models.CharField('telefone', max_length=20)
     created_at = models.DateTimeField('data de registro', default=now)
+    hash_url = models.CharField('URL', max_length=32, null=True)
 
     class Meta:
         verbose_name_plural = 'inscrições'

@@ -3,7 +3,7 @@ from django.core import mail
 from django.test import TestCase
 
 
-class SubscribePostValid(TestCase):
+class SubscribeEmailValid(TestCase):
     def setUp(self):
         data = dict(name='Rafic Farah', cpf='00000000000',
                     email='raficfarah07@gmail.com', phone='21-99999-9999')
