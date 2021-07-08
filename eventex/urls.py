@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import eventex.core.views
-from eventex.subscriptions.views import subscribe, detail
+from django.urls.conf import include
+
+from eventex.core.views import home
 
 
 urlpatterns = [
-    path('', eventex.core.views.home),
-    path('inscricao/', subscribe),
-    path('inscricao/<str:hash_url>/', detail),
+    path('', home, name='home'),
+    path('inscricao/', include('eventex.subscriptions.urls')),
     path('admin/', admin.site.urls),
 ]

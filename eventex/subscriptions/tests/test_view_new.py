@@ -1,13 +1,16 @@
+from eventex.subscriptions.views import new
+from eventex import subscriptions
 import hashlib
 from django.core import mail
 from django.test import TestCase
+from django.shortcuts import resolve_url as r
 from eventex.subscriptions.forms import SubscriptionForm
 from eventex.subscriptions.models import Subscription
 
 
-class SubscribeGet(TestCase):
+class SubscribtionsNewGet(TestCase):
     def setUp(self):
-        self.resp = self.client.get('/inscricao/')
+        self.resp = self.client.get(r('subscriptions:new'))
 
     def test_get(self):
         """Get /inscricao/ must return status code 200"""
@@ -40,18 +43,21 @@ class SubscribeGet(TestCase):
         self.assertIsInstance(form, SubscriptionForm)
 
 
-class SubscribePostValid(TestCase):
+class SubscriptionNewPostValid(TestCase):
     def setUp(self):
         self.data = dict(name='Rafic Farah', cpf='00000000000',
                          email='raficfarah07@gmail.com', phone='21-99999-9999')
-        self.resp = self.client.post('/inscricao/', self.data)
+        self.resp = self.client.post(r('subscriptions:new'), self.data)
 
     def test_post(self):
         """Valid post should redirect to /inscricao/hash_url/"""
         hash_object = hashlib.md5(self.data['email'].encode())
 
         self.assertRedirects(
-            self.resp, f'/inscricao/{hash_object.hexdigest()}/')
+            self.resp, r('subscriptions:detail', hash_object.hexdigest()))
+        
+        '''self.assertRedirects(
+            self.resp, f'/inscricao/{hash_object.hexdigest()}/')'''
 
     def test_send_subscribe_email(self):
         self.assertEqual(1, len(mail.outbox))
@@ -60,9 +66,9 @@ class SubscribePostValid(TestCase):
         self.assertTrue(Subscription.objects.exists())
 
 
-class SubscribePostInvalid(TestCase):
+class SubscriptionNewPostInvalid(TestCase):
     def setUp(self):
-        self.resp = self.client.post('/inscricao/', {})
+        self.resp = self.client.post(r('subscriptions:new'), {})
 
     def test_post(self):
         """Invalid POST should not redirect"""
