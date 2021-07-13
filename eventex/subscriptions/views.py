@@ -45,7 +45,7 @@ def create(request):
 
 def detail(request, hash_url):
     try:
-        subscription = Subscription.objects.get()
+        subscription = Subscription.objects.get(hash_url=hash_url)
     except Subscription.DoesNotExist:
         raise Http404
 
