@@ -30,7 +30,8 @@ def create(request):
                       {'form': form})
 
     subscription = Subscription.objects.create(**form.cleaned_data)
-    subscription.hash_url = hashlib.md5(subscription.email.encode()).hexdigest()
+    subscription_values = join_subscription_values(subscription.cpf, subscription.email, subscription.phone)
+    subscription.hash_url = hashlib.md5(subscription_values.encode()).hexdigest()
     subscription.save()
 
     # Send subscripton email
@@ -56,3 +57,9 @@ def detail(request, hash_url):
 def _send_mail(subject, from_, to, template_name, context):
     body = render_to_string(template_name, context)
     mail.send_mail(subject, body, from_, [from_, to])
+
+
+def join_subscription_values(cpf, email, phone):
+    to_be_hashed = cpf + email + phone
+
+    return to_be_hashed

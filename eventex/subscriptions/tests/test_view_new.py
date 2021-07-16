@@ -48,10 +48,12 @@ class SubscriptionNewPostValid(TestCase):
         self.data = dict(name='Rafic Farah', cpf='00000000000',
                          email='raficfarah07@gmail.com', phone='21-99999-9999')
         self.resp = self.client.post(r('subscriptions:new'), self.data)
+        
+        self.to_be_hashed = ''.join([self.data[field] for field in self.data if field!='name'])
 
     def test_post(self):
         """Valid post should redirect to /inscricao/hash_url/"""
-        hash_object = hashlib.md5(self.data['email'].encode())
+        hash_object = hashlib.md5(self.to_be_hashed.encode())
 
         self.assertRedirects(
             self.resp, r('subscriptions:detail', hash_object.hexdigest()))
@@ -88,3 +90,10 @@ class SubscriptionNewPostInvalid(TestCase):
 
     def test_dont_save_subscription(self):
         self.assertFalse(Subscription.objects.exists())
+
+class TemplateRegressionTest(TestCase):
+    def test_template_has_no_field_errors(self):
+        invalid_data = dict(name='Rafic Farah', cpf='12345678910')
+        response = self.client.post(r('subscriptions:new'), invalid_data)
+        
+        self.assertContains(response, '<ul class="errorlist nonfield">')
