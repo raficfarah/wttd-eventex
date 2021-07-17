@@ -365,13 +365,18 @@ section header h2 {
     border-color: #d0e9c6;
 }
 
-.speakers h2{
+.speakers h2 {
     text-transform: uppercase;
 }
 
-.speakers img{
+.speakers img {
     width: 200px;
     border-radius: 100%;
+}
+
+.speakers img.photo {
+    float: left;
+    padding-right: 15px;
 }
 
 /* Fim Customização */
