@@ -1,3 +1,4 @@
+from eventex import subscriptions
 import hashlib
 from django.conf import settings
 from django.contrib import messages
@@ -29,7 +30,7 @@ def create(request):
         return render(request, 'subscriptions/subscription_form.html',
                       {'form': form})
 
-    subscription = Subscription.objects.create(**form.cleaned_data)
+    subscription = form.save()
     subscription_values = join_subscription_values(subscription.cpf, subscription.email, subscription.phone)
     subscription.hash_url = hashlib.md5(subscription_values.encode()).hexdigest()
     subscription.save()
