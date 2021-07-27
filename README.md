@@ -1,3 +1,5 @@
+### Projeto feito durante o curso Welcome to the Django.
+
 # Eventex
 
 Sistema de Eventos encomendado pela Morena.
