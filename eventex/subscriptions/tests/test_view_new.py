@@ -57,9 +57,6 @@ class SubscriptionNewPostValid(TestCase):
 
         self.assertRedirects(
             self.resp, r('subscriptions:detail', hash_object.hexdigest()))
-        
-        '''self.assertRedirects(
-            self.resp, f'/inscricao/{hash_object.hexdigest()}/')'''
 
     def test_send_subscribe_email(self):
         self.assertEqual(1, len(mail.outbox))

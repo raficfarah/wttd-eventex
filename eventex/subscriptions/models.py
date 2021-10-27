@@ -8,7 +8,7 @@ class Subscription(models.Model):
     cpf = models.CharField(max_length=11, validators=[validate_cpf])
     email = models.EmailField('e-mail', blank=True)
     phone = models.CharField('telefone', max_length=20, blank=True)
-    created_at = models.DateTimeField('data de registro', default=now)
+    created_at = models.DateTimeField('data de registro', auto_now_add=True)
     hash_url = models.CharField('URL', max_length=32, null=True)
     paid = models.BooleanField('pago', default=False)
 

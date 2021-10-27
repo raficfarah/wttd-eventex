@@ -19,8 +19,9 @@ class HomeTest(TestCase):
         self.assertTemplateUsed(self.response, 'index.html')
     
     def test_subscription_link(self):
-        expected = 'href="{}"'.format(r('subscriptions:new'))
-        self.assertContains(self.response, 'href="/inscricao/"')
+        # expected = 'href="{}"'.format(r('subscriptions:new'))
+        expected = f'href="{r("subscriptions:new")}"'
+        self.assertContains(self.response, expected)
 
     def test_speakers(self):
         """Must show keynote speakers."""

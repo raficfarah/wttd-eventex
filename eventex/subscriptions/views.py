@@ -1,7 +1,5 @@
-from eventex import subscriptions
 import hashlib
 from django.conf import settings
-from django.contrib import messages
 from django.template.loader import render_to_string
 from django.core import mail
 from django.http import HttpResponseRedirect, Http404
@@ -31,8 +29,9 @@ def create(request):
                       {'form': form})
 
     subscription = form.save()
-    subscription_values = join_subscription_values(subscription.cpf, subscription.email, subscription.phone)
-    subscription.hash_url = hashlib.md5(subscription_values.encode()).hexdigest()
+
+    subscription.hash_url = value_hasher(subscription.cpf, subscription.email, subscription.phone)
+    
     subscription.save()
 
     # Send subscripton email
@@ -60,7 +59,10 @@ def _send_mail(subject, from_, to, template_name, context):
     mail.send_mail(subject, body, from_, [from_, to])
 
 
-def join_subscription_values(cpf, email, phone):
-    to_be_hashed = cpf + email + phone
+def value_hasher(*args):
+    to_be_hashed = ''
+    to_be_hashed = [to_be_hashed + i for i in args]
+    
+    hashed_values = hashlib.md5(''.join(to_be_hashed).encode()).hexdigest()
 
-    return to_be_hashed
+    return hashed_values

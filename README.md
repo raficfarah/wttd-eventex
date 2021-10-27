@@ -1,4 +1,4 @@
-### Projeto feito durante o curso Welcome to the Django.
+### Projeto desenvolvido durante o curso [Welcome to the Django](https://henriquebastos.net/produtos/welcome-to-the-django).
 
 # Eventex
 
@@ -7,14 +7,14 @@ Sistema de Eventos encomendado pela Morena.
 ## Como desenvolver?
 
 1. Clone o repositório;
-2. Crie um virtualenv com Python 3.8.5;
+2. Crie um virtualenv com Python 3.8+;
 3. Ative o virtualenv;
 4. Instale as dependências;
 5. Configure a instância com o .env;
 6. Execute os testes.
 
 ```console
-git clone git@github.com/...
+git clone git@github.com:raficfarah/wttd-eventex.git wttd
 cd wttd
 python3 -m venv .wttd
 source .wttd/bin/activate
@@ -30,13 +30,13 @@ python3 manage.py test
 3. Defina uma SECRET_KEY segura para a instância;
 4. Defina DEBUG=FALSE;
 5. Configure o serviço de email;
-6. Envie o código para o Heroku
+6. Envie o código para o Heroku.
 
 ```console
 heroku create minhainstancia
 heroku config:push
-heroku config:set SECRET_KEY=`python contrib/secret_gen.py
+heroku config:set SECRET_KEY=`python contrib/secret_gen.py`
 heroku config:set DEBUG=False
-# configura o email
+#configure o email
 git push heroku master --force
 ```

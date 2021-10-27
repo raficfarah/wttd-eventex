@@ -26,6 +26,12 @@ class SubscriptionFormOld(forms.Form):
 class SubscriptionForm(forms.ModelForm):
     class Meta:
         model = Subscription
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Nome completo'}),
+            'cpf': forms.TextInput(attrs={'placeholder': 'xxx.xxx.xxx-xx'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'nome@exemplo.com'}),
+            'phone': forms.TextInput(attrs={'placeholder': '(xx)xxxxx-xxxx'})
+        }
         fields = ['name', 'cpf', 'email', 'phone']
 
     def clean_name(self):
