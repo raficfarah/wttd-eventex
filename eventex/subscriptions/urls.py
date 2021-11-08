@@ -7,5 +7,5 @@ app_name = 'subscriptions'
 
 urlpatterns = [
     path('', new, name='new'),
-    path('<str:hash_url>/', detail, name='detail'),
+    path('<str:hashid>/', detail, name='detail'),
 ]

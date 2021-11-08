@@ -49,14 +49,14 @@ class SubscriptionNewPostValid(TestCase):
                          email='raficfarah07@gmail.com', phone='21-99999-9999')
         self.resp = self.client.post(r('subscriptions:new'), self.data)
         
-        self.to_be_hashed = ''.join([self.data[field] for field in self.data if field!='name'])
+        # self.to_be_hashed = ''.join([self.data[field] for field in self.data if field!='name'])
 
     def test_post(self):
         """Valid post should redirect to /inscricao/hash_url/"""
-        hash_object = hashlib.md5(self.to_be_hashed.encode())
-
+        # hash_object = hashlib.md5(self.to_be_hashed.encode())
+        hashid = self.resp.context['subscription'].hashid
         self.assertRedirects(
-            self.resp, r('subscriptions:detail', hash_object.hexdigest()))
+            self.resp, r('subscriptions:detail', hashid))
 
     def test_send_subscribe_email(self):
         self.assertEqual(1, len(mail.outbox))

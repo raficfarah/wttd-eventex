@@ -28,10 +28,7 @@ def create(request):
         return render(request, 'subscriptions/subscription_form.html',
                       {'form': form})
 
-    subscription = form.save()
-
-    subscription.hash_url = value_hasher(subscription.cpf, subscription.email, subscription.phone)
-    
+    subscription = form.save()    
     subscription.save()
 
     # Send subscripton email
@@ -41,12 +38,12 @@ def create(request):
                'subscriptions/subscription_email.txt',
                {'subscription': subscription})
 
-    return HttpResponseRedirect(r('subscriptions:detail', subscription.hash_url))
+    return HttpResponseRedirect(r('subscriptions:detail', subscription.hashid))
 
 
-def detail(request, hash_url):
+def detail(request, hashid):
     try:
-        subscription = Subscription.objects.get(hash_url=hash_url)
+        subscription = Subscription.objects.get(hashid=hashid)
     except Subscription.DoesNotExist:
         raise Http404
 

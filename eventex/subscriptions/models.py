@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.utils.timezone import now
 from eventex.subscriptions.validators import validate_cpf
@@ -9,7 +10,8 @@ class Subscription(models.Model):
     email = models.EmailField('e-mail', blank=True)
     phone = models.CharField('telefone', max_length=20, blank=True)
     created_at = models.DateTimeField('data de registro', auto_now_add=True)
-    hash_url = models.CharField('URL', max_length=32, null=True)
+    # hash_url = models.CharField('URL', max_length=32, null=True)
+    hashid = models.UUIDField(default=uuid.uuid4(), editable=False, unique=True)
     paid = models.BooleanField('pago', default=False)
 
     class Meta:

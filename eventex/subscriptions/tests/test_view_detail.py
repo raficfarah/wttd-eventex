@@ -1,4 +1,4 @@
-import hashlib
+import uuid
 from django.test import TestCase
 from django.shortcuts import resolve_url as r
 from eventex.subscriptions.models import Subscription
@@ -7,17 +7,15 @@ from eventex.subscriptions.models import Subscription
 class SubscriptionDetailGet(TestCase):
     def setUp(self):
         email = 'raficfarah07@gmail.com'
-        hash_url = hashlib.md5(email.encode()).hexdigest()
-        
+
         self.obj = Subscription.objects.create(
             name='Rafic Farah',
             cpf='00000000000',
             email=email,
             phone='21-99999-9999',
-            hash_url=hash_url
         )
 
-        self.resp = self.client.get(r('subscriptions:detail', self.obj.hash_url))
+        self.resp = self.client.get(r('subscriptions:detail', self.obj.hashid))
 
     def test_get(self):
         self.assertEqual(200, self.resp.status_code)
@@ -44,5 +42,5 @@ class SubscriptionDetailGet(TestCase):
 
 class SubscriptionDetailNotFound(TestCase):
     def test_not_found(self):
-        resp = self.client.get(r('subscriptions:detail', 0))
+        resp = self.client.get(r('subscriptions:detail', uuid.uuid4()))
         self.assertEqual(404, resp.status_code)
