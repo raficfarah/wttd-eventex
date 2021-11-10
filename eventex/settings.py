@@ -29,7 +29,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 # Application definition
 
@@ -128,6 +127,7 @@ STATIC_ROOT = f"{BASE_DIR / 'staticfiles'}"
 
 
 # Email configuration
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
