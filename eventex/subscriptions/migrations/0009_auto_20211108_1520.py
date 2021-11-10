@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='subscription',
             name='hashid',
-            field=models.UUIDField(default=uuid.UUID('b6694f1e-427d-45d7-817b-51b29eaaefa1'), editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
         ),
     ]
