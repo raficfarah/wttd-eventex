@@ -54,12 +54,3 @@ def detail(request, hashid):
 def _send_mail(subject, from_, to, template_name, context):
     body = render_to_string(template_name, context)
     mail.send_mail(subject, body, from_, [from_, to])
-
-
-def value_hasher(*args):
-    to_be_hashed = ''
-    to_be_hashed = [to_be_hashed + i for i in args]
-    
-    hashed_values = hashlib.md5(''.join(to_be_hashed).encode()).hexdigest()
-
-    return hashed_values
