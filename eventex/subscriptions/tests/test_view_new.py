@@ -52,7 +52,7 @@ class SubscriptionNewPostValid(TestCase):
         # self.to_be_hashed = ''.join([self.data[field] for field in self.data if field!='name'])
 
     def test_post(self):
-        """Valid post should redirect to /inscricao/hash_url/"""
+        """Valid post should redirect to /inscricao/hashid/"""
         # hash_object = hashlib.md5(self.to_be_hashed.encode())
         hashid = self.resp.context['subscription'].hashid
         self.assertRedirects(
