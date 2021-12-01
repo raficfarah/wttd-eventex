@@ -1,5 +1,5 @@
 ### Projeto desenvolvido durante o curso [Welcome to the Django](https://henriquebastos.net/produtos/welcome-to-the-django).
-
+Link para acesso: https://eventex-raficfarah.herokuapp.com/
 # Eventex
 
 Sistema de Eventos encomendado pela Morena.
